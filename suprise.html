@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Love Letter for You ❤️</title>
+    <style>
+        body {
+            background-color: #ffe6f2;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* Letter style */
+        .letter {
+            background: #fff7e6;
+            padding: 30px;
+            width: 60%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #d63384;
+            text-align: left;
+            position: relative;
+            font-family: 'Georgia', serif;
+        }
+
+        .letter h1 {
+            text-align: center;
+            color: #d63384;
+            font-size: 26px;
+        }
+
+        .letter p {
+            font-size: 18px;
+            color: #333;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        /* Play/Pause buttons */
+        .play-button, .stop-button {
+            background-color: #ff4d79;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            font-size: 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .stop-button {
+            background-color: #444;
+        }
+
+        .play-button:hover {
+            background-color: #d63384;
+        }
+
+        .stop-button:hover {
+            background-color: #222;
+        }
+
+        /* Floating hearts */
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 24px;
+            animation: float 5s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Love Letter -->
+        <div class="letter">
+            <h1>To My Love ❤️</h1>
+            <p>
+                My love, you are my peace, my safe haven, and my greatest blessing.  
+                I want you to know that no matter what, I will always be here for you.  
+                Close your eyes, take a deep breath, and let this beautiful recitation  
+                bring you comfort and healing.  
+            </p>
+            <p style="text-align: center; font-style: italic; color: #d63384;">You are my forever. 💕</p>
+        </div>
+
+        <!-- Play/Stop Buttons -->
+        <button class="play-button" onclick="playSurah()">🎵 Play Surah Al-Fatihah</button>
+        <button class="stop-button" onclick="stopSurah()">⏸️ Stop</button>
+
+        <!-- Audio -->
+        <audio id="audio" preload="none">
+            <source src="https://server8.mp3quran.net/afs/001.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <script>
+        function playSurah() {
+            let audio = document.getElementById("audio");
+            audio.play()
+                .then(() => console.log("Audio is playing!"))
+                .catch(error => {
+                    alert("Click the button again to play the Surah.");
+                    console.error("Playback error:", error);
+                });
+        }
+
+        function stopSurah() {
+            let audio = document.getElementById("audio");
+            audio.pause();
+            audio.currentTime = 0;
+        }
+
+        // Floating heart animation
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createHeart, 600);
+    </script>
+
+</body>
+</html>
