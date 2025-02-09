@@ -21,7 +21,6 @@
             flex-direction: column;
         }
 
-        /* Letter style */
         .letter {
             background: #fff7e6;
             padding: 30px;
@@ -48,55 +47,35 @@
             text-align: center;
         }
 
-        /* Play/Pause buttons */
+        /* Stylish Buttons */
         .play-button, .stop-button {
-            background-color: #ff4d79;
+            background: linear-gradient(45deg, #ff4d79, #d63384);
             color: white;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
-            font-size: 16px;
-            border-radius: 20px;
+            font-size: 18px;
+            border-radius: 25px;
             cursor: pointer;
             margin-top: 20px;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            outline: none;
+        }
+
+        .play-button:hover, .stop-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
 
         .stop-button {
-            background-color: #444;
-        }
-
-        .play-button:hover {
-            background-color: #d63384;
-        }
-
-        .stop-button:hover {
-            background-color: #222;
-        }
-
-        /* Floating hearts */
-        .heart {
-            position: absolute;
-            color: red;
-            font-size: 24px;
-            animation: float 5s linear infinite;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh);
-                opacity: 0;
-            }
+            background: linear-gradient(45deg, #444, #222);
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Love Letter -->
         <div class="letter">
             <h1>To My Love ❤️</h1>
             <p>
@@ -108,50 +87,41 @@
             <p style="text-align: center; font-style: italic; color: #d63384;">You are my forever. 💕</p>
         </div>
 
-        <!-- Play/Stop Buttons -->
-        <button class="play-button" onclick="playSurah()">🎵 Play Surah Al-Fatihah</button>
-        <button class="stop-button" onclick="stopSurah()">⏸️ Stop</button>
-
-        <!-- Audio -->
-        <audio id="audio" preload="none">
-            <source src="https://drive.google.com/uc?export=download&id=1FSplAzQlY6dg-O15kCdlxbuN0dAgxRU6" type="audio/mpeg">
-            Your browser does not support the audio element.
+        <audio id="audio">
+            <source src="https://www.dropbox.com/scl/fi/e72jvopccwe52iy4j32ud/surah.mp3?rlkey=7a6p8rcdhx4uhliptjska6mbo&st=9fg2x3uu&dl=1" type="audio/mpeg">
         </audio>
+        
+        <button class="play-button" id="playButton">🎵 Play Surah Al-Fatihah</button>
+        <button class="stop-button" id="stopButton">⏸️ Stop</button>
+        <p id="message"></p>
     </div>
 
     <script>
-        function playSurah() {
-            let audio = document.getElementById("audio");
-            audio.play()
-                .then(() => console.log("Audio is playing!"))
-                .catch(error => {
-                    alert("Click the button again to play the Surah.");
-                    console.error("Playback error:", error);
-                });
-        }
-
-        function stopSurah() {
-            let audio = document.getElementById("audio");
-            audio.pause();
-            audio.currentTime = 0;
-        }
-
-        // Floating heart animation
-        function createHeart() {
-            const heart = document.createElement("div");
-            heart.classList.add("heart");
-            heart.innerHTML = "❤️";
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
-            document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
-        }
-
-        setInterval(createHeart, 600);
+        document.addEventListener("DOMContentLoaded", function () {
+            const audio = document.getElementById("audio");
+            const playButton = document.getElementById("playButton");
+            const stopButton = document.getElementById("stopButton");
+            const message = document.getElementById("message");
+        
+            playButton.addEventListener("click", function () {
+                if (audio.paused || audio.ended) {
+                    audio.play().then(() => {
+                        message.innerText = "Surah is playing...";
+                    }).catch(error => {
+                        console.log("Autoplay blocked: " + error);
+                        message.innerText = "Click the button again to play the Surah.";
+                    });
+                }
+            });
+        
+            stopButton.addEventListener("click", function () {
+                if (!audio.paused) {  
+                    audio.pause();
+                    audio.currentTime = 0;
+                    message.innerText = "Surah stopped.";
+                }
+            });
+        });
     </script>
-
 </body>
 </html>
